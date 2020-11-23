@@ -1,0 +1,39 @@
+
+
+#relationships
+
+
+1- inside the posts migration file
+    $table->unsignedBigInteger('user_id');
+
+2- php artisan migrate:fresh
+
+3- create factory for the posts
+   php artisan make:factory PostFactory -m Post
+4-use the factory to generate dump data for the users
+     open tinker
+     User::factory()->create();  ((in laravel 8))
+     User::factory()->count(5)->create();
+
+     before 8 --> >>> factory(App\Model\User::class)->create();
+
+5- close tinker and re run it
+6->>> Post::factory()->count(3)->create();
+7- for specific user: >>> Post::factory()->count(3)->create(["user_id"=>1]);
+
+8- to find the articles related to the user
+App\Models\Post::find(2)->user; # will returns with null.
+
+9- switch to the file post model create the user function to return with the user
+related to the current article
+
+ public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+ 10- don't forget to restart the tinker.
+
+
+
+
+
